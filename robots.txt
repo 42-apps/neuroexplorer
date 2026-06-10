@@ -1,0 +1,5 @@
+# NeuroExplorer — private beta. Not for indexing or AI/ML scraping.
+# The 3D brain model is licensed from CGTrader under a Royalty-Free "No AI" license
+# (used as an encrypted Incorporated Product); training/fine-tuning AI on it is not permitted.
+User-agent: *
+Disallow: /

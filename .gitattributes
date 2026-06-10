@@ -1,0 +1,14 @@
+# Binary assets — never apply line-ending normalization (prevents corruption on clone)
+*.png  binary
+*.jpg  binary
+*.glb  binary
+*.gltf binary
+*.bin  binary
+*.usdz binary
+*.fbx  binary
+*.exr  binary
+*.stl  binary
+# GIfTI surfaces & SWC neurons are text — keep LF
+*.gii  text eol=lf
+*.swc  text eol=lf
+*.json text eol=lf

@@ -1,0 +1,15 @@
+# Project policy: the repo is fully self-contained — ALL code AND data is committed.
+# (Keep the repo PRIVATE: assets/propack/ is the purchased CGTrader pack — royalty-free
+#  for use, but not for public redistribution as a raw asset.)
+node_modules/
+.DS_Store
+Thumbs.db
+
+# Build outputs — regenerate on demand; never commit (gitignore has no inline comments,
+# so these patterns must sit on their own lines).
+# _betadist: public beta tree (tools/build-beta.cjs) — actually emitted to ../neuroexplorer-beta-dist
+_betadist/
+# dist: store-package artifacts (tools/build-store.cjs), incl. the ~61 MB zip
+dist/
+# sibling build trees created next to the repo
+neuroexplorer-store-dist/

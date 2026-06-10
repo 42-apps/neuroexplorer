@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noai, noimageai" />   <!-- model licensed "No AI": discourage AI/ML scraping -->
+  <title>NeuroExplorer — Interactive 3D Human Brain (beta)</title>
+  <link rel="stylesheet" href="styles/app.css" />
+</head>
+<body>
+  <div id="app">
+    <!-- 3D canvas mounts here -->
+    <div id="stage"></div>
+
+    <!-- floating hover tooltip -->
+    <div id="tooltip" class="tooltip" hidden></div>
+
+    <!-- top bar: brand + mode tabs -->
+    <header id="topbar">
+      <div class="brand">
+        <span class="brand-mark">🧠</span>
+        <span class="brand-name">Neuro<strong>Explorer</strong></span>
+        <span class="brand-beta" title="Beta — work in progress; feedback welcome" style="margin-left:8px;font-size:10px;font-weight:700;letter-spacing:.09em;padding:2px 6px;border-radius:999px;background:linear-gradient(90deg,#ff5db1,#7c5cff);color:#fff;vertical-align:middle;">BETA</span>
+      </div>
+      <nav id="modes" class="modes" role="tablist">
+        <button class="mode-tab is-active" data-mode="anatomy"  role="tab">Anatomy</button>
+        <button class="mode-tab"           data-mode="lifespan" role="tab">Lifespan</button>
+        <button class="mode-tab"           data-mode="disease"  role="tab">Disease</button>
+        <button class="mode-tab"           data-mode="senses"   role="tab">Senses</button>
+        <button class="mode-tab"           data-mode="neurons"  role="tab">Neurons</button>
+      </nav>
+      <div class="top-actions">
+        <button id="btn-help" class="icon-btn" title="How to use">?</button>
+      </div>
+    </header>
+
+    <!-- cross-section toolbar (shown when Cross-section is on) -->
+    <div id="slicebar" class="slicebar" hidden>
+      <span class="slice-label">Section</span>
+      <div class="segmented" id="slice-axis">
+        <button data-axis="x" class="is-active">Sagittal</button>
+        <button data-axis="y">Coronal</button>
+        <button data-axis="z">Axial</button>
+      </div>
+      <input id="slice-pos" type="range" min="-1" max="1" step="0.01" value="0" title="Slice position" />
+      <button id="slice-flip" class="toggle" title="Flip which side is kept">Flip</button>
+    </div>
+
+    <!-- left dock: mode-specific lists / legends -->
+    <aside id="leftdock" class="dock dock-left">
+      <div id="left-content"><!-- populated per mode --></div>
+    </aside>
+
+    <!-- right dock: details panel -->
+    <aside id="rightdock" class="dock dock-right" hidden>
+      <button id="detail-close" class="panel-close" title="Close">×</button>
+      <div id="detail-content"><!-- populated on selection --></div>
+    </aside>
+
+    <!-- bottom dock: global modifiers (age, sex, view) -->
+    <footer id="bottomdock">
+      <div class="ctrl ctrl-age">
+        <div class="ctrl-head">
+          <label for="age">Age</label>
+          <output id="age-readout">25 yrs</output>
+        </div>
+        <input id="age" type="range" min="0" max="90" step="1" value="25" />
+        <div class="age-ticks">
+          <span>Birth</span><span>Child</span><span>Teen</span><span>Adult</span><span>Senior</span>
+        </div>
+      </div>
+
+      <div class="ctrl ctrl-sex">
+        <span class="ctrl-label">Sex</span>
+        <div class="segmented" id="sex">
+          <button data-sex="female" class="is-active">Female</button>
+          <button data-sex="average">Average</button>
+          <button data-sex="male">Male</button>
+        </div>
+      </div>
+
+      <div class="ctrl ctrl-view">
+        <span class="ctrl-label">View</span>
+        <div class="view-toggles">
+          <button id="t-color" class="toggle" data-on="lobes">Lobe colors</button>
+          <button id="t-deep" class="toggle">Deep structures</button>
+          <button id="t-labels" class="toggle">Labels</button>
+          <button id="t-maxres" class="toggle" title="4K textures for the Pro model (power users)">Max res</button>
+          <button id="t-fly" class="toggle" title="Fly into the brain — W/A/S/D move, drag to look, scroll for speed">Fly inside</button>
+          <button id="t-slice" class="toggle" title="Cross-section — slice the brain to see inside">Cross-section</button>
+          <button id="t-tracts" class="toggle" title="Show major white-matter tracts">Tracts</button>
+          <button id="t-vessels" class="toggle" title="Show major arteries (Circle of Willis)">Vessels</button>
+          <button id="t-reset" class="toggle">Reset view</button>
+        </div>
+      </div>
+    </footer>
+
+    <!-- guided tour / quiz card (issue #19) -->
+    <div id="tourcard" class="tourcard" hidden></div>
+
+    <!-- loading splash -->
+    <div id="loading" class="loading">
+      <div class="loading-brain">🧠</div>
+      <div class="loading-text">Building your brain…</div>
+    </div>
+
+    <!-- evidence/disclaimer footer chip -->
+    <div id="evidence" class="evidence-chip" title="About the science">
+      Educational model · not for diagnosis
+    </div>
+  </div>
+
+  <script type="module" src="src/main.js"></script>
+</body>
+</html>
